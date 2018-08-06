@@ -2,6 +2,7 @@
 #define BITSYFS_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define FS_VERSION      "0.1.0"
 
@@ -33,17 +34,6 @@ struct bfs
     struct bfs_config bfs_conf;
 };
 
-struct bfnode
-{
-    uint32_t used;
-    struct bfnode *first;
-    struct bfnode *next;
-    char name[32];
-    uint32_t crc;
-    uint16_t size;
-    char *data;
-};
-
 /***************************** Public functions ******************************/
 int bfs_init(struct mem_interface *);
 int bfs_format(struct bfs_config *, bool quick);
@@ -52,6 +42,6 @@ int bfs_open(char *filename, char mode);
 int bfs_read(int fd, char *data, int nbytes);
 int bfs_write(int fd, char *data, int nbytes);
 int bfs_seek(int fd, int offset, int whence);
-void bfs_close(int fd);
+int bfs_close(int fd);
 
 #endif
